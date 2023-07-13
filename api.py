@@ -1,8 +1,12 @@
-from flask import Flask, json, request
+from flask import Flask, json, request, render_template
 import pandas as pd
 import math
 
 api = Flask(__name__)
+
+@api.route('/')
+def index():
+    return render_template('index.html')
 
 def haversine_distance(lat1, lon1, lat2, lon2):
     R = 6371  # Radius of the Earth in kilometers
