@@ -59,6 +59,5 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'foodtrucksmm'
-          startup-command: flask --app api run
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F5D173AD31C94086ADC8D0F7A301323A }}
