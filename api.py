@@ -1,6 +1,5 @@
 from flask import Flask, json, request
 import pandas as pd
-import math
 
 api = Flask(__name__)
 
