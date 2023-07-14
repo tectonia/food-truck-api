@@ -94,4 +94,4 @@ def get_truck(locationid):
     return truck
 
 if __name__ == '__main__':
-    api.run()
+    api.run(port=80, debug=True)
