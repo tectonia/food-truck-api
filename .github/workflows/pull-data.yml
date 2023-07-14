@@ -1,0 +1,28 @@
+# 1. This workflow will download data from https://data.sfgov.org/api/views/rqzj-sfat/rows.csv and push it to the repo
+# 2. The workflow will run on a schedule every day at 12:00 AM UTC
+
+name: Pull Data
+
+on:
+  cron:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  pull-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Pull Data
+        run: |
+          curl https://data.sfgov.org/api/views/rqzj-sfat/rows.csv > Mobile_Food_Facility_Permit.csv
+
+      - name: Commit files
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: github-actions
+          author_email: '41898282+github-actions[bot]@users.noreply.github.com'
+          message: Update csv file
+          add: '*.csv'
