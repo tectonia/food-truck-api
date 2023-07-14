@@ -55,18 +55,43 @@ def get_trucks():
                           'Fire Prevention Districts', 'Schedule', 'blocklot', 
                           'NOISent', 'Neighborhoods (old)', 'cnn', 'X', 'Y', 
                           'Police Districts', 'Received', 'permit', 'Status', 
-                          'PriorPermit', 'locationid', 'permit', 'FoodItems', 
-                          'Supervisor Districts', 'Latitude', 'Longitude'])
+                          'PriorPermit', 'Supervisor Districts'])
     df = df.rename(columns={'Applicant': 'Name', 'FacilityType': 'Facility Type', 
                             'LocationDescription': 'Location Description', 
                             'dayshours': 'Opening Hours', 'block': 'Block', 
-                            'lot': 'Lot'})
+                            'lot': 'Lot', 'FoodItems': 'Food Items', 
+                            'locationid': 'Location ID'})
 
     # Convert to json
     df = df.to_json(orient='records')
     trucks = json.loads(df)
 
     return trucks
+
+@api.route('/trucks/<int:locationid>', methods=['GET'])
+def get_truck(locationid):
+    # Read csv file
+    df = pd.read_csv(r'Mobile_Food_Facility_Permit.csv')
+
+    # Find truck with given locationid
+    df = df[df['locationid'] == locationid]
+
+    # Drop unnecessary columns and rename columns
+    df = df.drop(columns=['Approved', 'ExpirationDate', 'Fire Prevention Districts', 
+                          'Schedule', 'blocklot', 'NOISent', 'Neighborhoods (old)', 
+                          'cnn', 'X', 'Y', 'Police Districts', 'Received', 
+                          'permit', 'Status', 'PriorPermit', 'Supervisor Districts'])
+    df = df.rename(columns={'Applicant': 'Name', 'FacilityType': 'Facility Type', 
+                            'LocationDescription': 'Location Description', 
+                            'dayshours': 'Opening Hours', 'block': 'Block', 
+                            'lot': 'Lot', 'FoodItems': 'Food Items', 
+                            'locationid': 'Location ID'})
+
+    # Convert to json
+    df = df.to_json(orient='records')
+    truck = json.loads(df)
+
+    return truck
 
 if __name__ == '__main__':
     api.run()
