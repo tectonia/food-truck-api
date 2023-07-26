@@ -2,9 +2,9 @@ from flask import Flask, json, request, jsonify
 import pandas as pd
 import math
 
-api = Flask(__name__)
+app = Flask(__name__)
 
-@api.route('/', methods = ['GET'])
+@app.route('/', methods = ['GET'])
 def home():
     data = "hello world"
     return jsonify({'data': data})
@@ -27,7 +27,7 @@ def haversine_distance(lat1, lon1, lat2, lon2):
 
     return distance
 
-@api.route('/trucks', methods=['GET'])
+@app.route('/trucks', methods=['GET'])
 def get_trucks():
     # Get longitude and latitude from query string
     lon = request.args.get('lon', type=float)
@@ -68,7 +68,7 @@ def get_trucks():
 
     return trucks
 
-@api.route('/trucks/<int:locationid>', methods=['GET'])
+@app.route('/trucks/<int:locationid>', methods=['GET'])
 def get_truck(locationid):
     # Read csv file
     df = pd.read_csv(r'Mobile_Food_Facility_Permit.csv')
@@ -94,4 +94,4 @@ def get_truck(locationid):
     return truck
 
 if __name__ == '__main__':
-    api.run()
+    app.run()
