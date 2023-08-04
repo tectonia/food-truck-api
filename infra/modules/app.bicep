@@ -29,7 +29,8 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
 }
 
 resource webAppSlot 'Microsoft.Web/sites/slots@2022-09-01' = {
-  name: '${webApp.name}-staging'
+  name: 'staging'
+  parent: webApp
   location: location
   properties: {
     serverFarmId: appServicePlan.id
