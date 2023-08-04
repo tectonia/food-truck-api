@@ -1,0 +1,59 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
+
+name: Build and deploy Python app to Azure Web App - foodtrucksmm
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+        - 'infra/**'
+  workflow_dispatch:
+
+env:
+  TEMPLATE-FILE: infra/main.bicep
+  PARAM-FILE: infra/main.parameters.json
+
+jobs:
+
+  deploy-infra:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Bicep linter
+        run: az bicep build --file ${{ env.TEMPLATE-FILE }}
+      
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+      
+      - name: Run preflight validation 
+        uses: Azure/arm-deploy@v1.0.9
+        with:
+          template: ${{ env.TEMPLATE-FILE }}
+          parameters:  ${{ env.PARAM-FILE }}
+          scope: subscription
+          region: westeurope
+          deploymentMode: Validate
+      
+      - name: Run what-if
+        uses: Azure/arm-deploy@v1.0.9
+        with:
+          template: ${{ env.TEMPLATE-FILE }}
+          parameters: ${{ env.PARAM-FILE }}
+          scope: subscription
+          region: westeurope
+          additionalArguments: --what-if
+      
+      - name: Deploy to Azure
+        uses: Azure/arm-deploy@v1.0.9
+        with:
+          template: ${{ env.TEMPLATE-FILE }}
+          parameters: ${{ env.PARAM-FILE }}
+          scope: subscription
+          region: westeurope
