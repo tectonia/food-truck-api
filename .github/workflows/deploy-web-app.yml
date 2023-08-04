@@ -12,10 +12,6 @@ on:
       - 'src/**'
   workflow_dispatch:
 
-env:
-  TEMPLATE-FILE: infra/main.bicep
-  PARAM-FILE: infra/main.parameters.json
-
 jobs:
 
   deploy-staging:
