@@ -33,6 +33,7 @@ jobs:
         uses: Azure/arm-deploy@v1.0.9
         with:
           template: ${{ env.TEMPLATE-FILE }}
+          parameters: main.parameters.json
           region: westeurope
           deploymentMode: Validate
       
@@ -40,6 +41,7 @@ jobs:
         uses: Azure/arm-deploy@v1.0.9
         with:
           template: ${{ env.TEMPLATE-FILE }}
+          parameters: main.parameters.json
           region: westeurope
           additionalArguments: --what-if
       
@@ -47,6 +49,7 @@ jobs:
         uses: Azure/arm-deploy@v1.0.9
         with:
           template: ${{ env.TEMPLATE-FILE }}
+          parameters: main.parameters.json
           region: westeurope
 
   deploy-staging:
