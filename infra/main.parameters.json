@@ -7,6 +7,12 @@
     },
     "webAppName" : {
       "value": "webApp-foodtruckapimm"
+    },
+    "location": {
+      "value": "West Europe"
+    },
+    "resourceGroupName": {
+      "value": "rg-foodtruckapi"
     }
   }
 }
