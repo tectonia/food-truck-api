@@ -6,7 +6,7 @@ api = Flask(__name__)
 
 @api.route('/', methods = ['GET'])
 def home():
-    data = "hello world"
+    data = "hello cs bootcamp"
     return jsonify({'data': data})
 
 def haversine_distance(lat1, lon1, lat2, lon2):
