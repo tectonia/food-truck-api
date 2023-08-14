@@ -1,8 +1,35 @@
-from flask import Flask, json, request, jsonify
+import os
+
+from flask import Flask, json, jsonify, redirect, render_template, request, send_from_directory, url_for
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
 import pandas as pd
 import math
 
 api = Flask(__name__)
+csrf = CSRFProtect(api)
+
+# WEBSITE_HOSTNAME exists only in production environment
+if 'WEBSITE_HOSTNAME' not in os.environ:
+    # local development, where we'll use environment variables
+    print("Loading config.development and environment variables from .env file.")
+    api.config.from_object('azureproject.development')
+else:
+    # production
+    print("Loading config.production.")
+    api.config.from_object('azureproject.production')
+
+api.config.update(
+    SQLALCHEMY_DATABASE_URI=api.config.get('DATABASE_URI'),
+    SQLALCHEMY_TRACK_MODIFICATIONS=False,
+)
+
+# Initialize the database connection
+db = SQLAlchemy(api)
+
+# Enable Flask-Migrate commands "flask db init/migrate/upgrade" to work
+migrate = Migrate(api, db)
 
 @api.route('/', methods = ['GET'])
 def home():
