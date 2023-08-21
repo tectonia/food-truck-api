@@ -1,9 +1,7 @@
-# for flask app
 Flask
 pandas
 gunicorn
-
-# for postgresql connection
+schedule
 Flask-Migrate
 Flask-SQLAlchemy
 flask_wtf

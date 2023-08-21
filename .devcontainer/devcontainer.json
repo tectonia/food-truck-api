@@ -1,21 +1,25 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-	"name": "Python 3",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/python:3.10-bullseye",
+	"name": "flask-postgresql-app",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
 		"ghcr.io/devcontainers/features/azure-cli:1": {},
-		"ghcr.io/rchaganti/vsc-devcontainer-features/azurebicep:1": {}
+		"ghcr.io/rchaganti/vsc-devcontainer-features/azurebicep:1": {},
+		"ghcr.io/itsmechlark/features/postgresql:latest": {}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	"forwardPorts": [
+		5000, 5432
+	],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip3 install --user -r requirements.txt",
+	// "postCreateCommand": "",
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -26,15 +30,30 @@
 				"ms-vscode.vscode-node-azure-pack",
 				"GitHub.copilot",
 				"ms-python.python",
-				"ms-azuretools.vscode-bicep"
+				"ms-python.vscode-pylance",
+				"ms-azuretools.vscode-bicep",
+				"mtxr.sqltools",
+				"mtxr.sqltools-driver-pg",
+				"GitHub.copilot-chat"
 			],
 			"settings": {
-
+				"sqltools.connections": [
+					{
+						"name": "Container database",
+						"driver": "PostgreSQL",
+						"previewLimit": 50,
+						"server": "localhost",
+						"port": 5432,
+						"database": "app",
+						"username": "app_user",
+						"password": "app_password"
+					}
+				]
 			}
 		}
 
-	}
+	},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	"remoteUser": "vscode"
 }

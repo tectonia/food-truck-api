@@ -1,0 +1,9 @@
+{% if trucks %}
+    <ul>
+    {% for truck in trucks %}
+        <li>{{ truck.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No food trucks found.</p>
+{% endif %}
