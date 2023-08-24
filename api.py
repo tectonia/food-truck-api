@@ -42,35 +42,6 @@ def home():
     trucks = FoodTruck.query.all()
     return render_template('index.html', trucks=trucks)
 
-@api.route('/update-db', methods=['POST'])
-def update_db():
-    # Get the uploaded file from the request
-    file = request.files['file']
-
-    # Save the file to a temporary location
-    file_path = '/tmp/' + file.filename
-    file.save(file_path)
-
-    # Read CSV file
-    df = pd.read_csv(file_path)
-
-    # Iterate over each row and update the database
-    for index, row in df.iterrows():
-        truck = FoodTruck.query.filter_by(name=row['name']).first()
-        if truck:
-            truck.name = row['Applicant']
-            truck.address = row['address']
-            truck.latitude = row['Latitude']
-            truck.longitude = row['Longitude']
-        else:
-            truck = FoodTruck(id=index, name=row['Applicant'], address=row['Address'], block=row['block'], lot=row['lot'], status=row['Status'], food_items=row['FoodItems'], facility_type=row['FacilityType'], location_description=row['LocationDescription'], locationid=row['locationid'], opening_hours=row['dayshours'], zip_codes=row['Zip Codes'], expiration_date=row['ExpirationDate'], latitude=row['Latitude'], longitude=row['Longitude'])
-            db.session.add(truck)
-            print(truck)
-    db.session.commit()
-
-    # Return a success message
-    return jsonify({'message': 'CSV file uploaded successfully'})
-
 def haversine_distance(lat1, lon1, lat2, lon2):
     R = 6371  # Radius of the Earth in kilometers
 
