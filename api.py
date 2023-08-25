@@ -7,8 +7,8 @@ from flask_wtf.csrf import CSRFProtect
 import pandas as pd
 import math
 
-# from dotenv import load_dotenv
-# load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
 api = Flask(__name__)
 csrf = CSRFProtect(api)
