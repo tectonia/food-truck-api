@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Deploy Azure Web App
+name: Deploy infra
 
 on:
   push:
@@ -36,7 +36,7 @@ jobs:
         uses: Azure/arm-deploy@v1.0.9
         with:
           template: ${{ env.TEMPLATE-FILE }}
-          parameters:  ${{ env.PARAM-FILE }}
+          parameters:  ${{ env.PARAM-FILE }} adminPassword=${{ secrets.ADMIN_PASSWORD }} secretKey=${{ secrets.SECRET_KEY }}
           scope: subscription
           region: westeurope
           deploymentMode: Validate
@@ -45,7 +45,7 @@ jobs:
         uses: Azure/arm-deploy@v1.0.9
         with:
           template: ${{ env.TEMPLATE-FILE }}
-          parameters: ${{ env.PARAM-FILE }}
+          parameters:  ${{ env.PARAM-FILE }} adminPassword=${{ secrets.ADMIN_PASSWORD }} secretKey=${{ secrets.SECRET_KEY }}
           scope: subscription
           region: westeurope
           additionalArguments: --what-if
@@ -54,6 +54,6 @@ jobs:
         uses: Azure/arm-deploy@v1.0.9
         with:
           template: ${{ env.TEMPLATE-FILE }}
-          parameters: ${{ env.PARAM-FILE }}
+          parameters:  ${{ env.PARAM-FILE }} adminPassword=${{ secrets.ADMIN_PASSWORD }} secretKey=${{ secrets.SECRET_KEY }}
           scope: subscription
           region: westeurope
