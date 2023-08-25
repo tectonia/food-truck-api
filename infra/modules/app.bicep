@@ -23,7 +23,7 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
     serverFarmId: appServicePlan.id
     siteConfig: {
       linuxFxVersion: 'PYTHON|3.10'
-      appCommandLine: 'gunicorn --bind=0.0.0.0 --timeout 600 --chdir src api:api'
+      appCommandLine: 'gunicorn --bind=0.0.0.0 --timeout 600 api:api'
       appSettings: [
         {
           name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'
