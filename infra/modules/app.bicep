@@ -1,8 +1,10 @@
 param appServicePlanName string
-
 param webAppName string
-
 param location string
+@secure()
+param secretKey string
+@secure()
+param postgresConnectionString string
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appServicePlanName
@@ -29,6 +31,14 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
           name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'
           value: '1'
         }
+        {
+          name: 'SECRET_KEY'
+          value: secretKey
+        }
+        {
+          name: 'AZURE_POSTGRESQL_CONNECTIONSTRING'
+          value: postgresConnectionString
+        }
       ]
     }
   }
@@ -47,6 +57,14 @@ resource webAppSlot 'Microsoft.Web/sites/slots@2022-09-01' = {
         {
           name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'
           value: '1'
+        }
+        {
+          name: 'SECRET_KEY'
+          value: secretKey
+        }
+        {
+          name: 'AZURE_POSTGRESQL_CONNECTIONSTRING'
+          value: postgresConnectionString
         }
       ]
     }

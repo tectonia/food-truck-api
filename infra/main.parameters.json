@@ -8,6 +8,15 @@
     "webAppName" : {
       "value": "webApp-foodtruckapimm"
     },
+    "postrgreSQLServerName": {
+      "value": "postgresql-foodtruck-server"
+    },
+    "postrgreSQLDatabaseName": {
+      "value": "foodtrucks"
+    },
+    "adminUsername":{
+      "value": "citus"
+    },
     "location": {
       "value": "West Europe"
     },
