@@ -9,7 +9,6 @@ class FoodTruck(db.Model):
     name = Column(String(50))
     address = Column(String(50))
     block = Column(String(50))
-    distance = Column(Float)
     food_items = Column(String(250))
     latitude = Column(Float)
     longitude = Column(Float)
