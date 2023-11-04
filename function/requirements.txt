@@ -1,0 +1,6 @@
+requests
+pandas
+psycopg2
+azure-functions
+os
+datetime
