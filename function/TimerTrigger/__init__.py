@@ -44,9 +44,11 @@ def main(mytimer: func.TimerRequest) -> None:
     )
 
     # Drop any columns that are not in the FoodTruck class
-    df = df[['cnn', 'blocklot', 'permit', 'X', 'Y', 'Schedule', 'NOISent', 'Approved', 'Received', 'PriorPermit', 'Location', 'Fire Prevention Districts', 'Police Districts', 'Supervisor Districts', 'Neighborhoods (old)']]
+    df = df.drop(['cnn', 'blocklot', 'permit', 'X', 'Y', 'Schedule', 'NOISent', 'Approved', 'Received', 'PriorPermit', 'Location', 'Fire Prevention Districts', 'Police Districts', 'Supervisor Districts', 'Neighborhoods (old)'], axis=1)
 
     logging.info('Data transformed successfully.')
+
+    logging.info('Dataframe: %s', df.head(5))
 
     # Get the connection string from the app settings
     DATABASE_URI = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
