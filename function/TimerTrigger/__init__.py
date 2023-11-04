@@ -33,7 +33,7 @@ def main(mytimer: func.TimerRequest) -> None:
         'ExpirationDate': 'expiration_date',
         'Latitude': 'latitude',
         'Longitude': 'longitude',
-        'LocationDescription': 'location_description'
+        'LocationDescription': 'location_description',
         'FoodItems': 'food_items',
         'FacilityType': 'facility_type',
         'Status': 'status',
