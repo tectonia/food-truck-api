@@ -70,8 +70,8 @@ def main(mytimer: func.TimerRequest) -> None:
         result = cur.fetchone()
         if result is None:
             cur.execute(
-                "INSERT INTO truck (id, name, address, block, latitude, longitude, location_description, locationid, food_items, opening_hours, zip_codes, lot, facility_type, status, expiration_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (index, row['name'], row['address'], row['block'], row['latitude'], row['longitude'], row['location_description'], row['locationid'], row['food_items'], row['opening_hours'], row['zip_codes'], row['lot'], row['facility_type'], row['status'], row['expiration_date'])
+                "INSERT INTO truck (id, name, address, block, latitude, longitude, location_description, locationid, food_items, opening_hours, zip_codes, lot, facility_type, status, expiration_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                (index, row['name'], row['address'], row['block'], row['latitude'], row['longitude'], row['location_description'], row['locationid'], row['food_items'], row['opening_hours'], row['zip_codes'], row['lot'], row['facility_type'], row['status'], row['expiration_date'])
             )
     
     logging.info('Data updated successfully.')
