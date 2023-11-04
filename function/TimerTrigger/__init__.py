@@ -5,6 +5,7 @@ import pandas as pd
 import azure.functions as func
 import psycopg2
 import os
+import io
 
 def main(mytimer: func.TimerRequest) -> None:
     utc_timestamp = datetime.datetime.utcnow().replace(
@@ -15,15 +16,16 @@ def main(mytimer: func.TimerRequest) -> None:
 
     logging.info('Python timer trigger function ran at %s', utc_timestamp)
 
-    url = 'https://data.sfgov.org/api/views/rqzj-sfat/rows.csv'
-    response = requests.get(url)
+    # Fetch data from URL
+    response = requests.get('https://data.sfgov.org/api/views/rqzj-sfat/rows.csv')
+    data = response.content.decode('utf-8')
 
-    with open('Mobile_Food_Facility_Permit.csv', 'w', newline='') as csvfile:
-        csvfile.write(response.text)
-    
-    logging.info('CSV file created succesfully.')
+    logging.info('Data fetched successfully.')
 
-    df = pd.read_csv('Mobile_Food_Facility_Permit.csv')
+    # Parse CSV data into DataFrame
+    df = pd.read_csv(io.StringIO(data))
+
+    logging.info('Data parsed successfully.')
 
     # Transform the data to match the FoodTruck class
     df = df.rename(columns={
