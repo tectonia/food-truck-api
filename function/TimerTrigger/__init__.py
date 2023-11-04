@@ -1,11 +1,10 @@
 import datetime
 import logging
 import requests
-import csv
 import pandas as pd
 import azure.functions as func
 import psycopg2
-from azureproject.production import DATABASE_URI
+import os
 
 def main(mytimer: func.TimerRequest) -> None:
     utc_timestamp = datetime.datetime.utcnow().replace(
@@ -46,6 +45,9 @@ def main(mytimer: func.TimerRequest) -> None:
     df = df[['cnn', 'blocklot', 'permit', 'X', 'Y', 'Schedule', 'NOISent', 'Approved', 'Received', 'PriorPermit', 'Location', 'Fire Prevention Districts', 'Police Districts', 'Supervisor Districts', 'Neighborhoods (old)']]
 
     logging.info('Data transformed successfully.')
+
+    # Get the connection string from the app settings
+    DATABASE_URI = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
 
     # Connect to your Azure PostgreSQL instance
     conn = psycopg2.connect(DATABASE_URI)
